@@ -34,6 +34,7 @@ class Solution {
 public:
     vector<int> searchRange(vector<int>& nums, int target) {
         int firstindex = lowerbound(nums, target);
+        if(firstindex==-1) return {-1,-1};
         int lastindex = upperbound(nums, target);
         return {firstindex, lastindex};
     }
