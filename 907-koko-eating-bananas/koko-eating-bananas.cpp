@@ -24,13 +24,14 @@ public:
         long long reqTime = 0;  
         int high = maxii(piles);
         int low = 1;
-
+        int result;
         while(low <= high){
             int mid = low + (high - low) / 2;
 
             reqTime = totalTime(piles, mid);
 
             if(reqTime <= h){
+                result  = mid;
                 high = mid - 1;
             }
             else{
@@ -38,6 +39,6 @@ public:
             }
         }
 
-        return low;
+        return result;
     }
 };
