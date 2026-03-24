@@ -9,13 +9,12 @@ public:
         // count characters of s
         for(int i = 0; i < s.length(); i++) {
             freq[s[i] - 'a']++;
+            freq[t[i] - 'a']--;
         }
 
         // subtract using t
         for(int i = 0; i < t.length(); i++) {
-            freq[t[i] - 'a']--;
-
-            // agar kisi ka count negative ho gaya → mismatch
+             // agar kisi ka count negative ho gaya → mismatch
             if(freq[t[i] - 'a'] < 0) {
                 return false;
             }
