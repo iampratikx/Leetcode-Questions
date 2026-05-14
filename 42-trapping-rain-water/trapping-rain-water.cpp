@@ -1,4 +1,30 @@
 class Solution {
+public:
+    int trap(vector<int>& h) {
+        int n = h.size();
+        int l = 0, r = n-1;
+        int lmax = 0, rmax = 0;
+        int ans = 0;
+
+        while(l < r){
+            lmax = max(lmax,h[l]);
+            rmax = max(rmax,h[r]);
+
+            if(lmax < rmax){
+                ans += lmax - h[l];
+                l++;
+            }
+            else{
+                ans += rmax - h[r];
+                r--;
+            }
+        }
+        return ans;
+    }
+};
+
+/* 
+class Solution {
 private:
     vector<int> leftMax(vector<int>& height,int n){
         vector<int> lMax(n);
@@ -36,3 +62,4 @@ public:
         return sum;
     }
 };
+*/
