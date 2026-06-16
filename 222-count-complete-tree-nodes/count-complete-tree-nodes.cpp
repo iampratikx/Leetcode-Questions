@@ -10,16 +10,9 @@
  * };
  */
 class Solution {
-    void CountNodes(TreeNode* root,int &cnt){
-        if(root==NULL) return;
-        cnt++;
-        CountNodes(root-> left,cnt);
-        CountNodes(root-> right,cnt);
-    }
 public:
     int countNodes(TreeNode* root) {
-        int cnt = 0;
-        CountNodes(root,cnt);
-        return cnt;
+        if(root==NULL) return 0;
+        return 1 + countNodes(root-> left) + countNodes(root-> right);
     }
 };
