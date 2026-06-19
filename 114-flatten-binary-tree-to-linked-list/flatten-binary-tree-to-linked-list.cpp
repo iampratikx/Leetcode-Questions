@@ -10,15 +10,19 @@
  * };
  */
 class Solution {
-    
-public:
-TreeNode* prev = NULL;
-    void flatten(TreeNode* node) {
+    void f(TreeNode* node, TreeNode* &prev){
+        
         if(node == NULL) return;
-        flatten(node -> right);
-        flatten(node -> left);
+        f(node -> right,prev);
+        f(node -> left,prev);
         node -> right = prev;
         node -> left = NULL;
         prev = node;
+    }
+public:
+    void flatten(TreeNode* root) {
+        TreeNode* prev = NULL;
+        f(root,prev);
+        return;
     }
 };
