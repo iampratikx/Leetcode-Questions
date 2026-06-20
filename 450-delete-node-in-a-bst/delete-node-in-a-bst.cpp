@@ -10,110 +10,68 @@
  * };
  */
 class Solution {
-    // Left subtree ka sabse right node return karega
-    TreeNode* findlast(TreeNode* node) {
-        node = node->left;
+    TreeNode* findLastRight(TreeNode* root) {
+        if (root->right == NULL)
+            return root;
 
-        while (node->right != NULL) {
-            node = node->right;
-        }
+        return findLastRight(root->right);
+    }
 
-        return node;
+    TreeNode* helper(TreeNode* root) {
+
+        // No left child
+        if (root->left == NULL)
+            return root->right;
+
+        // No right child
+        if (root->right == NULL)
+            return root->left;
+
+        // Both children present
+        TreeNode* rightChild = root->right;
+        TreeNode* lastRight = findLastRight(root->left);
+
+        lastRight->right = rightChild;
+
+        return root->left;
     }
 
 public:
     TreeNode* deleteNode(TreeNode* root, int key) {
 
-        if (root == NULL) return NULL;
+        if (root == NULL)
+            return NULL;
 
-        TreeNode* curr = root;
-        TreeNode* currprev = NULL;
+        // Root ko delete karna hai
+        if (root->val == key)
+            return helper(root);
 
-        // Node find karo
-        while (curr != NULL) {
+        TreeNode* dummy = root;
 
-            if (curr->val == key)
-                break;
+        while (root != NULL) {
 
-            currprev = curr;
+            if (key < root->val) {
 
-            if (key < curr->val)
-                curr = curr->left;
-            else
-                curr = curr->right;
+                if (root->left != NULL && root->left->val == key) {
+                    root->left = helper(root->left);
+                    break;
+                }
+                else {
+                    root = root->left;
+                }
+
+            } else {
+
+                if (root->right != NULL && root->right->val == key) {
+                    root->right = helper(root->right);
+                    break;
+                }
+                else {
+                    root = root->right;
+                }
+            }
         }
 
-        // Key nahi mili
-        if (curr == NULL)
-            return root;
-
-        // Leaf node
-        if (curr->left == NULL && curr->right == NULL) {
-
-            if (currprev == NULL)
-                return NULL;
-
-            if (currprev->left == curr)
-                currprev->left = NULL;
-            else
-                currprev->right = NULL;
-
-            delete curr;
-            return root;
-        }
-
-        // Sirf right child hai
-        if (curr->left == NULL) {
-
-            if (currprev == NULL)
-                return curr->right;
-
-            if (currprev->left == curr)
-                currprev->left = curr->right;
-            else
-                currprev->right = curr->right;
-
-            delete curr;
-            return root;
-        }
-
-        // Sirf left child hai
-        if (curr->right == NULL) {
-
-            if (currprev == NULL)
-                return curr->left;
-
-            if (currprev->left == curr)
-                currprev->left = curr->left;
-            else
-                currprev->right = curr->left;
-
-            delete curr;
-            return root;
-        }
-
-        // Dono child hain
-        TreeNode* rightchild = curr->right;
-        TreeNode* lastnode = findlast(curr);
-
-        // Right subtree ko left subtree ke last node se jodo
-        lastnode->right = rightchild;
-
-        // Root delete ho raha hai
-        if (currprev == NULL) {
-            TreeNode* newRoot = curr->left;
-            delete curr;
-            return newRoot;
-        }
-
-        // Parent ko curr ke left subtree se connect karo
-        if (currprev->left == curr)
-            currprev->left = curr->left;
-        else
-            currprev->right = curr->left;
-
-        delete curr;
-
-        return root;
+        return dummy;
     }
 };
