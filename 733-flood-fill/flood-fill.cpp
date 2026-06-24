@@ -34,10 +34,11 @@ class Solution {
     }
 public:
     vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        vector<vector<int>> ans = image;
         int n = image.size();
         int m = image[0].size();
         vector<vector<int>> vis(n, vector<int>(m, 0));
-        dfs(sr,sc,color,image,vis);
-        return image;
+        dfs(sr,sc,color,ans,vis);
+        return ans;
     }
 };
