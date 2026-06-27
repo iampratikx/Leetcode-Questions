@@ -23,6 +23,7 @@ public:
         if(root -> val == 0 && !left && !right) {
             return NULL;
         }
+        
         return root;
     }
 };
