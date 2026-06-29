@@ -1,20 +1,20 @@
 class Solution {
-public:
-    vector<int> dp;
-    int helper(vector<int> & nums, int i){
-        if(i>=nums.size()){
-            return 0;
-        }
-        if(dp[i] != -1) return dp[i];
-        int take = nums[i] + helper(nums,i+2);
-        int leave = helper(nums,i+1);
+    private:
+    int solve(int i, vector<int>& nums, vector<int>& dp) {
+        if(i == 0) return nums[i];
+        if(i < 1) return 0;
 
-        return dp[i] = max(take,leave);
+        if(dp[i] != -1) return dp[i];
+
+        int pick = solve(i - 2, nums, dp) + nums[i];
+        int notpick = solve(i - 1, nums, dp) + 0;
+
+        return dp[i] = max(pick, notpick);
     }
+public:
     int rob(vector<int>& nums) {
         int n = nums.size();
-        dp.resize(n+1,-1);
-
-        return helper(nums,0);
+        vector<int> dp(n, -1);
+        return solve(n-1, nums, dp);
     }
 };
