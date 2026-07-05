@@ -5,7 +5,7 @@ class Solution {
         if (j < 0 || j >= m) return 1e9;
         if (i == 0) return arr[i][j];
 
-        if (dp[i][j] != INT_MAX)
+        if (dp[i][j] != INT_MIN)
             return dp[i][j];
 
         int up = arr[i][j] + f(i - 1, j, n, m, arr, dp);
@@ -21,7 +21,7 @@ public:
         int n = matrix.size();
         int m = matrix[0].size();
 
-        vector<vector<int>> dp(n, vector<int>(m, INT_MAX));
+        vector<vector<int>> dp(n, vector<int>(m, INT_MIN));
 
         int mini = INT_MAX;
 
