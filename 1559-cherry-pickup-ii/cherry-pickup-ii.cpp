@@ -17,7 +17,7 @@ public:
         if(dp[i][j1][j2] != -1)
             return dp[i][j1][j2];
             
-        int maxi = -1e8;   // ✅ Har recursive call ka apna local maximum
+        int maxi = -1e8;   //  Har recursive call ka apna local maximum
 
         for(int dj1 = -1; dj1 <= 1; dj1++) {
             for(int dj2 = -1; dj2 <= 1; dj2++) {
@@ -26,13 +26,13 @@ public:
                     maxi = max(maxi,
                                arr[i][j1] +
                                f(i + 1, j1 + dj1, j2 + dj2,
-                                 arr, m, n, dp));   // ❌ dp,maxi nahi bhejna
+                                 arr, m, n, dp));  
                 }
                 else {
                     maxi = max(maxi,
                                arr[i][j1] + arr[i][j2] +
                                f(i + 1, j1 + dj1, j2 + dj2,
-                                 arr, m, n, dp));   // ❌ dp,maxi nahi bhejna
+                                 arr, m, n, dp));  
                 }
             }
         }
@@ -49,6 +49,6 @@ public:
         // Agar memoization karoge to dp 3D hona chahiye: dp[n][m][m]
 
         return f(0, 0, m - 1, grid, m, n, dp);
-        // ✅ Robot 2 ko last column (m-1) se start karna hai.
+        //  Robot 2 ko last column (m-1) se start karna hai.
     }
 };
