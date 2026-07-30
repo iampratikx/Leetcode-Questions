@@ -1,23 +1,19 @@
 class Solution {
 public:
-    int searchInsert(vector<int>& nums, int x) {
-        int n = nums.size();
-        int low = 0, high = n - 1;
-        int ans = n; // Default to end if x is greater than all elements
-
-        while (low <= high) {
-            int mid = (low + high) / 2;
-
-            if (nums[mid] >= x) {
-                // Potential answer found, try to go left
+    int searchInsert(vector<int>& nums, int target) {
+        int s = 0;
+        int e = nums.size()-1;
+        int ans = nums.size();
+        while(s<=e) {
+            int mid = (s+e)/2;
+            if(nums[mid]>=target){
                 ans = mid;
-                high = mid - 1;
-            } else {
-                // Go right
-                low = mid + 1;
+                e = mid-1;
+            }
+            else{
+                s = mid+1;
             }
         }
-
         return ans;
     }
 };
