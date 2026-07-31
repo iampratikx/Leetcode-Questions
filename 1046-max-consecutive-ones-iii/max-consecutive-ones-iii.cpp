@@ -14,8 +14,9 @@ public:
             if(zeros<=k) {
                 int len = r - l + 1;
                 maxlen = max(len, maxlen);
+                r++;
             }
-            r++;
+            
         }
         return maxlen;
     }
