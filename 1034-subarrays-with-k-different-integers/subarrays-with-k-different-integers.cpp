@@ -1,38 +1,23 @@
 class Solution {
-public:
-    // Helper function to count subarrays with at most K distinct integers
-    int atMostK(vector<int>& nums, int K) {
-        unordered_map<int, int> freq;
-        int left = 0, count = 0;
-
-        // Traverse the array with right pointer
-        for (int right = 0; right < nums.size(); right++) {
-            // If it's a new unique element, decrease K
-            if (freq[nums[right]] == 0) {
-                K--;
+    int solve(vector<int>& nums, int k) {
+        int cnt = 0;
+        int r = 0, l = 0;
+        int n = nums.size();
+        map<int,int> mp;
+        while(r < n) {
+            mp[nums[r]]++;
+            while(mp.size() > k) {
+                mp[nums[l]]--;
+                if(mp[nums[l]] == 0) mp.erase(nums[l]);
+                l++;
             }
-
-            // Increment frequency of current element
-            freq[nums[right]]++;
-
-            // Shrink the window if distinct count > K
-            while (K < 0) {
-                freq[nums[left]]--;
-                if (freq[nums[left]] == 0) {
-                    K++;
-                }
-                left++;
-            }
-
-            // Count all subarrays ending at current right
-            count += (right - left + 1);
+            cnt = cnt + (r-l+1);
+            r++;
         }
-
-        return count;
+        return cnt;
     }
-
-    // Main function to return number of subarrays with exactly K distinct integers
+public:
     int subarraysWithKDistinct(vector<int>& nums, int k) {
-        return atMostK(nums, k) - atMostK(nums, k - 1);
+        return solve(nums, k) - solve(nums, k-1);
     }
 };
